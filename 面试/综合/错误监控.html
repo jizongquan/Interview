@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>错误监控</title>
+</head>
+<body>
+<!--前端错误的分类-->
+<!--1、即时运行错误：代码错误；2、资源加载错误-->
+
+<!--错误的捕获方式：1、即时运行错误的捕获方式；2、资源加载错误-->
+<!--即时运行错误的捕获方式-->
+<!--1、try...catch   2、window.onerror-->
+<!--资源记载错误-->
+<!--1、object.onerror 2、performance.getEntries()这个是高级浏览器的 3、Error事件捕获-->
+
+<!--跨域的js运行错误可以捕获吗，错误提示什么，应该怎么处理-->
+<!--也是可以捕获的，但是只能拿到一个错误信息叫做sript error，其他拿不到具体信息-->
+<!--处理：1、在客户端做的是在script标签增加crossorigin属性；2、在服务端做的设置js资源响应头Access-Control-Allow-Origin：后面可以是*也可以是指定的域名-->
+
+
+<!--上报错误的基本原理-->
+<!--1、采用Ajax通信的方式上报-->
+<!--2、利用Image对象上报-->
+<script>
+    //例子
+    (new Image()).src='http://baidu.com'//src是你想要指定的路径我这里以百度为例
+</script>
+</body>
+</html>

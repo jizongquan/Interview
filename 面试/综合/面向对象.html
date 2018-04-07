@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>面向对象</title>
+</head>
+<body>
+<!--类的声明：一种是构造函数模拟类的方式；另一种es6中对class的声明-->
+<script>
+    //构造函数声明
+    function Animal(){
+        this.name = 'name'//this表示构造函数声明
+    }
+    //es6中class的声明,class后面就是类名
+    class Animal2{
+        constructor(){
+            //constructor就是构造函数
+            this.name = name;
+        }
+    }
+</script>
+<!--如何通过类来实例化生成一个对象-->
+<!--实例化 直接new就可以了-->
+<script>
+    console.log(new Animal(),new Animal2())
+</script>
+
+<!--js的继承有几种方式有几种形式-->
+<!--1、借助构造函数来实现继承-->
+<!--此方法缺点就是Parent1原型链上的东西并没有被child1所继承，child1指继承了Parent1里面的属性-->
+<script>
+    function Parent1(){
+        this.name = 'parent1'
+    }
+//    Parent1.prototype.say = function(){}
+    function Child1(){
+        //child1是不会继承Paren1原型对象下的say方法
+        // 将父级元素的构造函数的this指向子构造函数的实例上去
+        Parent1.call(this);//call和apply 改变函数运行的上下文
+        this.type = 'child1'
+    }
+    console.log(new Child1())
+//    console.log(new Child1().say()) 不会继承say方法
+</script>
+
+<!--2、借助原型链实现继承-->
+<!--缺点就是你改一个实例下面的属性，其他实例下的 也会跟着变化-->
+<script>
+    function Parent2(){
+        this.name = 'parent2'
+    }
+    function Child2(){
+        this.type = 'child2'
+    }
+    Child2.prototype = new Parent2();
+    console.log(new Child2())
+</script>
+
+<!--3、组合方式将上面两个结合-->
+<script>
+    function Parent3(){
+        this.name = 'Parent3';
+        this.play=[1,2,3]
+    }
+    function Child3(){
+        Parent3.call(this);
+        this.type = 'child3';
+    }
+//    Child3.prototype = new Parent3();
+//    优化1 这个缺点是都指向父类的构造函数，父类和子类没有区分
+//    Child3.prototype = Parent3.prototype;
+//    优化2 通过Object.create()实现了父类和子类的隔离
+    Child3.prototype = Object.create(Parent3.prototype);
+    Child3.prototype.constructor =Child3//在指定下即可
+
+    var s3 = new Child3();
+    var s4 = new Child3();
+    s3.play.push(4);
+    console.log(s3.play,s4.play)//[1,2,3,4] [1,2,3]
+</script>
+</body>
+</html>

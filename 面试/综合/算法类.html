@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>算法类</title>
+</head>
+<body>
+<!--算法会有：排序；堆栈、队列、链表；递归；波兰式和逆波兰式-->
+
+<!--排序-->
+
+<!--快速排序-->
+<!--算法步骤：
+1、先从数列中取出一个数作为“基准”。
+2、分区过程：将比这个“基准”大的数全放到“基准”的右边，小于或等于“基准”的数全放到“基准”的左边。
+3、再对左右区间重复第二步，直到各区间只有一个数。-->
+<!--快速算法简单说就是 选一个元素作为基准，将所有小于基准的元素放在左边，所有大于基准的 元素放在右边，然后对基准左右两边的子集不断重复这个操作，直到所有子集剩下一个元素，这个过程就可以理解为递归的过程-->
+<script>
+    var arr1 =[4,8,2,1,3];
+    var quickSort = function(arr) {
+        if (arr.length <= 1) { return arr; }
+        var pivotIndex = Math.floor(arr.length / 2);   //基准位置（理论上可任意选取）
+        var pivot = arr.splice(pivotIndex, 1)[0];  //基准数
+        var left = [];
+        var right = [];
+        for (var i = 0; i < arr.length; i++){
+            if (arr[i] < pivot) {
+                left.push(arr[i]);
+            } else {
+                right.push(arr[i]);
+            }
+        }
+        return quickSort(left).concat([pivot], quickSort(right));  //链接左数组、基准数构成的数组、右数组
+    };
+    console.log(quicksort(arr1))
+</script>
+
+<!--冒泡排序-->
+<!--比较相邻的两个元素，如果后面的比前面的小，则交换位置。依照这个规则进行多次并且递减的迭代，直到顺序正确。每次将剩下数组里面最大的一个数排到最后面-->
+<script>
+    var arr = [3,6,1,2,5];
+    var temp;
+    for(var i= 0;i<arr.length;i++){
+        for(var j=i;j<arr.length;j++){
+            if(arr[i] > arr[j]){
+                temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    console.log(arr);
+</script>
+
+
+<!--选择排序法-->
+<!--在未排序序列中找到最小（大）元素，存放到排序序列的起始位置从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。重复第二步，直到所有元素均排序完毕。-->
+<script>
+    function selectionSort(arr) {
+        var len = arr.length;
+        var minIndex, temp;
+        for (var i = 0; i < len - 1; i++) {
+            minIndex = i;
+            for (var j = i + 1; j < len; j++) {
+                if (arr[j] < arr[minIndex]) {     // 寻找最小的数
+                    minIndex = j;                 // 将最小数的索引保存
+                }
+            }
+            temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
+        return arr;
+    }
+</script>
+
+
+<!--希尔排序 选择记忆前三种即可-->
+<!--希尔排序，也称递减增量排序算法;但希尔排序是非稳定排序算法-->
+<!--选择一个增量序列 t1，t2，……，tk，其中 ti > tj, tk = 1；按增量序列个数 k，对序列进行 k 趟排序；
+每趟排序，根据对应的增量 ti，将待排序列分割成若干长度为 m 的子序列，分别对各子表进行直接插入排序。仅增量因子为 1 时，整个序列作为一个表来处理，表长度即为整个序列的长度。-->
+
+<script>
+    function shellSort(arr) {
+        var len = arr.length,
+                temp,
+                gap = 1;
+        while(gap < len/3) {          //动态定义间隔序列
+            gap = gap*3+1;
+        }
+        for (gap; gap > 0; gap = Math.floor(gap/3)) {
+            for (var i = gap; i < len; i++) {
+                temp = arr[i];
+                for (var j = i-gap; j >= 0 && arr[j] > temp; j -= gap) {
+                    arr[j+gap] = arr[j];
+                }
+                arr[j+gap] = temp;
+            }
+        }
+        return arr;
+    }
+</script>
+
+<!--以下内容 稍作了解即可不用背，但是上面的必须掌握-->
+<!--堆栈-->
+<!--对于一个栈，我们需要实现添加、删除元素、获取栈顶元素、已经是否为空，栈的长度、清除元素等几个基本操作。下面是基本定义。-->
+<script>
+    function Stack(){
+        this.items = [];
+    }
+    Stack.prototype = {
+        constructor:Stack,
+        push:function(element){
+            this.items.push(element);
+        },
+        pop:function(){
+            return this.items.pop();
+        },
+        peek:function(){
+            return this.items[this.items.length - 1];
+        },
+        isEmpty:function(){
+            return this.items.length == 0;
+        },
+        clear:function(){
+            this.items = [];
+        },
+        size:function(){
+            return this.items.length;
+        },
+        print:function(){
+            console.log(this.items.toString());
+        }
+    }
+</script>
+<!--栈的基本操作。-->
+<script>
+    var stack = new Stack();
+    console.log(stack.isEmpty());//true
+    stack.push(5);
+    stack.push(8);
+    console.log(stack.peek());//8
+    stack.push(11);
+    console.log(stack.size());//3
+    console.log(stack.isEmpty());
+    stack.push(15);
+    stack.pop();
+    stack.pop();
+    console.log(stack.size());//2
+    console.log(stack.print());//5,8
+</script>
+<!--通过栈实现对正整数的二进制转换。-->
+<script>
+    function divideBy2(decNumber){
+        var decStack = new Stack();
+        var rem;
+        var decString = '';
+        while(decNumber > 0){
+            rem = decNumber%2;
+            decStack.push(rem);
+            decNumber = Math.floor(decNumber/2);
+        }
+        while(!decStack.isEmpty()){
+            decString += decStack.pop().toString();
+        }
+        return decString;
+    }
+    console.log(divideBy2(10));//1010
+</script>
+
+
+<!--队列-->
+<!--队列是遵循FIFO(First In First Out,先进先出,也称为先来先服务)原则的一组有序的项。队列在尾部添加新元素,并从顶部移除元素。最新添加的元素必须排在队列的末尾。队列要实现的操作基本和栈一样，只不过栈是FILO(先进后出)。-->
+<script>
+    function Queue(){
+        this.items = [];
+    }
+    Queue.prototype = {
+        constructor:Queue,
+        enqueue:function(elements){
+            this.items.push(elements);
+        },
+        dequeue:function(){
+            return this.items.shift();
+        },
+        front:function(){
+            return this.items[0];
+        },
+        isEmpty:function(){
+            return this.items.length == 0;
+        },
+        size:function(){
+            return this.items.length;
+        },
+        clear:function(){
+            this.items = [];
+        },
+        print:function(){
+            console.log(this.items.toString());
+        }
+    }
+</script>
+<!--队列的基本使用-->
+<script>
+    var queue = new Queue();
+    console.log(queue.isEmpty());//true
+    queue.enqueue('huang');
+    queue.enqueue('cheng');
+    console.log(queue.print());//huang,cheng
+    console.log(queue.size());//2
+    console.log(queue.isEmpty());//false
+    queue.enqueue('du');
+    console.log(queue.dequeue());//huang
+    console.log(queue.print());//cheng,du
+</script>
+<!--优先队列-->
+<!--元素的添加和移除是基于优先级的。实现一个优先队列,有两种选项:设置优先级,然后在正确的位置添加元素;或者用入列操 作添加元素,然后按照优先级移除它们。 我们在这里实现的优先队列称为最小优先队列,因为优先级的值较小的元素被放置在队列最 前面(1代表更高的优先级)。最大优先队列则与之相反,把优先级的值较大的元素放置在队列最 前面。-->
+<!--优先队列的定义-->
+<!--我们在这里使用组合继承的方式继承自Queue队列。-->
+<script>
+    function PriorityQueue(){
+        Queue.call(this);
+    };
+    PriorityQueue.prototype = new Queue();
+    PriorityQueue.prototype.constructer = PriorityQueue;
+    PriorityQueue.prototype.enqueue = function(element,priority){
+        function QueueElement(tempelement,temppriority){
+            this.element = tempelement;
+            this.priority = temppriority;
+        }
+        var queueElement = new QueueElement(element,priority);
+        if(this.isEmpty()){
+            this.items.push(queueElement);
+        }else{
+            var added = false;
+            for(var i = 0; i < this.items.length;i++){
+                if(this.items[i].priority > queueElement.priority){
+                    this.items.splice(i,0,queueElement);
+                    added = true;
+                    break;
+                }
+            }
+            if(!added){
+                this.items.push(queueElement);
+            }
+        }
+
+    }
+    //这个方法可以用Queue的默认实现
+    PriorityQueue.prototype.print = function(){
+        var result ='';
+        for(var i = 0; i < this.items.length;i++){
+            result += JSON.stringify(this.items[i]);
+        }
+        return result;
+    }
+</script>
+<!--优先队列的基本使用-->
+<script>
+    var priorityQueue = new PriorityQueue();
+    priorityQueue.enqueue("cheng", 2);
+    priorityQueue.enqueue("du", 3);
+    priorityQueue.enqueue("huang", 1);
+    console.log(priorityQueue.print());//{"element":"huang","priority":1}{"element":"cheng","priority":2}{"element":"du","priority":3}
+    console.log(priorityQueue.size());//3
+    console.log(priorityQueue.dequeue());//{ element="huang",  priority=1}
+    console.log(priorityQueue.size());//2
+</script>
+
+
+<!--链表-->
+<!--数组的大小是固定的,从数组的起点或中间插入 或移除项的成本很高,因为需要移动元素(尽管我们已经学过的JavaScript的Array类方法可以帮 我们做这些事,但背后的情况同样是这样)。
+链表存储有序的元素集合,但不同于数组,链表中的元素在内存中并不是连续放置的。每个 元素由一个存储元素本身的节点和一个指向下一个元素的引用(也称指针或链接)组成。
+相对于传统的数组,链表的一个好处在于,添加或移除元素的时候不需要移动其他元素。然 而,链表需要使用指针,因此实现链表时需要额外注意。
+数组的另一个细节是可以直接访问任何 位置的任何元素,而要想访问链表中间的一个元素,需要从起点(表头)开始迭代列表直到找到 所需的元素-->
+<!--链表的创建-->
+<!--我们使用动态原型模式来创建一个链表。列表最后一个节点的下一个元素始终是null。-->
+<script>
+    function LinkedList(){
+        function Node(element){
+            this.element = element;
+            this.next = null;
+        }
+        this.head = null;
+        this.length = 0;
+        //通过对一个方法append判断就可以知道是否设置了prototype
+        if((typeof this.append !== 'function')&&(typeof this.append !== 'string')){
+            //添加元素
+            LinkedList.prototype.append = function(element){
+                var node = new Node(element);
+                var current;
+                if(this.head === null){
+                    this.head = node;
+                }else{
+                    current = this.head;
+                    while(current.next !== null){
+                        current = current.next;
+                    }
+                    current.next = node;
+                }
+                this.length++;
+            };
+            //插入元素，成功true，失败false
+            LinkedList.prototype.insert = function(position,element){
+                if(position > -1 && position < this.length){
+                    var current = this.head;
+                    var previous;
+                    var index = 0;
+                    var node = new Node(element);
+                    if(position == 0){
+                        node.next = current;
+                        this.head = node;
+                    }else{
+                        while(index++ < position){
+                            previous = current;
+                            current = current.next;
+                        }
+                        node.next = current;
+                        previous.next = node;
+                    }
+                    this.length++;
+                    return true;
+                }else{
+                    return false;
+                }
+            };
+            //根据位置删除指定元素，成功 返回元素， 失败 返回null
+            LinkedList.prototype.removeAt = function(position){
+                if(position > -1 && position < this.length){
+                    var current = this.head;
+                    var previous = null;
+                    var index = 0;
+                    if(position == 0){
+                        this.head = current.next;
+                    }else{
+                        while(index++ < position){
+                            previous = current;
+                            current = current.next;
+                        }
+                        previous.next = current.next;
+                    }
+                    this.length--;
+                    return current.element;
+                }else{
+                    return null;
+                }
+            };
+            //根据元素删除指定元素，成功 返回元素， 失败 返回null
+            LinkedList.prototype.remove = function(element){
+                var index = this.indexOf(element);
+                return this.removeAt(index);
+            };
+            //返回给定元素的索引，如果没有则返回-1
+            LinkedList.prototype.indexOf = function(element){
+                var current = this.head;
+                var index = 0;
+                while(current){
+                    if(current.element === element){
+                        return index;
+                    }
+                    index++;
+                    current = current.next;
+                }
+                return -1;
+            };
+            LinkedList.prototype.isEmpty = function(){
+                return this.length === 0;
+            };
+            LinkedList.prototype.size = function(){
+                return this.length;
+            };
+            LinkedList.prototype.toString = function(){
+                var string = '';
+                var current = this.head;
+                while(current){
+                    string += current.element;
+                    current = current.next;
+                }
+                return string;
+            };
+            LinkedList.prototype.getHead = function(){
+                return this.head;
+            };
+        }
+    }
+</script>
+<!--链表的基本使用-->
+<script>
+    var linkedList = new LinkedList();
+    console.log(linkedList.isEmpty());//true;
+    linkedList.append('huang');
+    linkedList.append('du')
+    linkedList.insert(1,'cheng');
+    console.log(linkedList.toString());//huangchengdu
+    console.log(linkedList.indexOf('du'));//2
+    console.log(linkedList.size());//3
+    console.log(linkedList.removeAt(2));//du
+    console.log(linkedList.toString());//huangcheng
+</script>
+
+<!--双向链表的创建-->
+<!--链表有多种不同的类型,这一节介绍双向链表。双向链表和普通链表的区别在于,在链表中, 一个节点只有链向下一个节点的链接,而在双向链表中,链接是双向的:一个链向下一个元素, 另一个链向前一个元素。
+双向链表和链表的区别就是有一个tail属性，所以必须重写insert、append、removeAt方法。每个节点对应的Node也多了一个prev属性。-->
+<script>
+    //寄生组合式继承实现，详见javascript高级程序设计第七章
+    function inheritPrototype(subType, superType) {
+        function object(o) {
+            function F() {}
+            F.prototype = o;
+            return new F();
+        }
+        var prototype = object(superType.prototype);
+        prototype.constructor = subType;
+        subType.prototype = prototype;
+    }
+    function DoublyLinkedList() {
+        function Node(element) {
+            this.element = element;
+            this.next = null;
+            this.prev = null;
+        }
+        this.tail = null;
+        LinkedList.call(this);
+        //与LinkedList不同的方法自己实现。
+        this.insert = function(position, element) {
+            if (position > -1 && position <= this.length) {
+                var node = new Node(element);
+                var current = this.head;
+                var previous;
+                var index = 0;
+                if (position === 0) {
+                    if (!this.head) {
+                        this.head = node;
+                        this.tail = node;
+                    } else {
+                        node.next = current;
+                        current.prev = node;
+                        this.head = node;
+                    }
+                } else if (position == this.length) {
+                    current = this.tail;
+                    current.next = node;
+                    node.prev = current;
+                    this.tail = node;
+                } else {
+                    while (index++ < position) {
+                        previous = current;
+                        current = current.next;
+                    }
+                    previous.next = node;
+                    node.next = current;
+                    current.prev = node;
+                    node.prev = previous;
+                }
+                this.length++;
+                return true;
+            } else {
+                return false;
+            }
+        };
+        this.append = function(element) {
+            var node = new Node(element);
+            var current;
+            if (this.head === null) {
+                this.head = node;
+                this.tail = node;
+            } else {
+                current = this.head;
+                while (current.next !== null) {
+                    current = current.next;
+                }
+                current.next = node;
+                node.prev = current;
+                this.tail = node;
+            }
+            this.length++;
+        };
+        this.removeAt = function(position) {
+            if (position > -1 && position < this.length) {
+                var current = this.head;
+                var previous;
+                var index = 0;
+                if (position === 0) {
+                    this.head = current.next;
+                    if (this.length === 1) {
+                        this.tail = null;
+                    } else {
+                        this.head.prev = null;
+                    }
+                } else if (position === (this.length - 1)) {
+                    current = this.tail;
+                    this.tail = current.prev;
+                    this.tail.next = null;
+                } else {
+                    while (index++ < position) {
+                        previous = current;
+                        current = current.next;
+                    }
+                    previous.next = current.next;
+                    current.next.prev = previous;
+                }
+                this.length--;
+                return current.element;
+            } else {
+                return false;
+            }
+        };
+    }
+    inheritPrototype(DoublyLinkedList, LinkedList);
+</script>
+<!--双向链表的基本使用-->
+<script>
+    var doublyList = new DoublyLinkedList();
+    console.log(doublyList.isEmpty()); //true;
+    doublyList.append('huang');
+    doublyList.append('du')
+    doublyList.insert(1, 'cheng');
+    console.log(doublyList.toString()); //huangchengdu
+    console.log(doublyList.indexOf('du')); //2
+    console.log(doublyList.size()); //3
+    console.log(doublyList.removeAt(2)); //du
+    console.log(doublyList.toString()); //huangcheng
+</script>
+<!-- 循环链表-->
+<!--循环链表可以像链表一样只有单向引用,也可以像双向链表一样有双向引用。
+循环链表和链 表之间唯一的区别在于,最后一个元素指向下一个元素的指针(tail.next)不是引用null, 而是指向第一个元素(head)。
+双向循环链表有指向head元素的tail.next,和指向tail元素的head.prev。-->
+
+
+<!--递归 了解即可或者可以说不会-->
+<!--https://segmentfault.com/a/1190000009857470-->
+<script>
+
+</script>
+</body>
+</html>

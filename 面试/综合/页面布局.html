@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>页面布局</title>
+</head>
+<body>
+<!--题目：假设高度已知，请写出三栏布局，其中左栏、右栏宽度各为300px，中间自适应-->
+<!--在写布局前都要将样式初始化-->
+<style>
+    html *{
+        padding: 0;
+        margin: 0;
+    }
+    .layout .left-center-right div{
+        height: 100px;
+    }
+</style>
+<!--第一种 浮动-->
+<div class="layout float">
+    <style>
+        .layout.float .left{
+            float: left;
+            width: 300px;
+            background: red;
+        }
+        .layout.float .right{
+            float: right;
+            width: 300px;
+            background: blue;
+        }
+        .layout.float .center{
+            background: yellow;
+        }
+    </style>
+    <div class="left-center-right">
+        <div class="left"></div>
+        <div class="right"></div>
+        <div class="center"><h1>浮动</h1></div>
+    </div>
+</div>
+
+
+<!--第二种 绝对定位-->
+<div class="layout absoulte" style="margin-top: 20px">
+    <style>
+        .layout.absoulte .left-center-right div{
+            position: absolute;
+        }
+        .layout.absoulte .left{
+            left: 0;
+            width: 300px;
+            background: red;
+        }
+        .layout.absoulte .center{
+            left: 300px;
+            right: 300px;
+            background: yellow;
+        }
+        .layout.absoulte .right{
+            right: 0;
+            width: 300px;
+            background: blue;
+        }
+    </style>
+    <div class="left-center-right">
+        <div class="left"></div>
+        <div class="center"><h1>定位</h1></div>
+        <div class="right"></div>
+    </div>
+</div>
+
+<!--第三种 flex-->
+<div class="layout flexbox" style="margin-top: 145px">
+    <style>
+        .layout.flexbox .left-center-right{
+            display: flex;
+        }
+        .layout.flexbox .left{
+            width: 300px;
+            background: red;
+        }
+        .layout.flexbox .center{
+            /*flex:1中间自适应原理*/
+            flex: 1;
+            background: yellow;
+        }
+        .layout.flexbox .right{
+            width: 300px;
+            background: blue;
+        }
+    </style>
+    <div class="left-center-right">
+        <div class="left"></div>
+        <div class="center">flex</div>
+        <div class="right"></div>
+    </div>
+</div>
+
+<!--第四种 表格布局-->
+<div class="layout table" style="margin-top: 20px">
+    <style>
+        .layout.table .left-center-right{
+            width: 100%;
+            display: table;
+            height: 100px;
+        }
+        .layout.table .left-center-right div{
+            display: table-cell;
+        }
+        .layout.table .left{
+            width: 300px;
+            background: red;
+        }
+        .layout.table .center{
+            background: yellow;
+        }
+        .layout.table .right{
+            width: 300px;
+            background: blue;
+        }
+    </style>
+    <div class="left-center-right">
+        <div class="left"></div>
+        <div class="center">表格布局</div>
+        <div class="right"></div>
+    </div>
+</div>
+
+<!--第五种 网格布局-->
+<div class="layout grid" style="margin-top: 20px">
+    <style>
+        .layout.grid .left-center-right{
+            display: grid;
+            width: 100%;
+            /*行高*/
+            grid-template-rows:100px ;
+            /*列*/
+            grid-template-columns: 300px auto 300px;
+        }
+        .layout.grid .left{
+            background: red;
+        }
+        .layout.grid .center{
+            background: yellow;
+        }
+        .layout.grid .right{
+            background: blue;
+        }
+    </style>
+    <div class="left-center-right">
+        <div class="left"></div>
+        <div class="center">grid</div>
+        <div class="right"></div>
+    </div>
+</div>
+
+<!--高度位置的情况下 只有flex布局和表格布局可用-->
+<!--同类题目有-->
+<!--上下高度固定，中间自适应-->
+<!--左宽度固定，右自适应-->
+<!--右宽度固定，左自适应-->
+<!--上高度固定，下自适应-->
+<!--下高度固定，上自适应-->
+</body>
+</html>

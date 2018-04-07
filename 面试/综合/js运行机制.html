@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js运行机制</title>
+</head>
+<body>
+<!--例子-->
+<script>
+    console.log("A");
+    while (true){
+
+    }
+    console.log("B")
+    //这里只会输出A
+</script>
+
+<!--例子2-->
+<script>
+    for(var i = 0;i<4;i++){
+        setTimeout(function(){
+            console.log(i)
+        },1000)
+    }
+    //会输出4个4
+</script>
+<!--什么时候开启异步任务-->
+<!--setTimeout和setInterval；DOM事件；ES6中的Promise-->
+
+</body>
+</html>

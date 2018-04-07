@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js基础其他知识</title>
+</head>
+<body>
+<!--题目：获取2017-06-10格式的日期；获取随机数，要求是长度一致的字符串格式；写一个能遍历对象和数组的通用forEach函数-->
+
+<!--日期-->
+<script>
+    Date.now();//获取当前时间毫秒数
+    var dt = new Date();
+    dt.getTime();//获取毫秒数
+    dt.getFullYear();//年
+    dt.getMonth();//月（0-11）
+    dt.getDate();//日（0-31）
+    dt.getHours();//小时（0-23）
+    dt.getMinutes();//分钟（0-59）
+    dt.getSeconds();//秒（0-59）
+</script>
+
+<!--数组-->
+<!--forEach 遍历所有元素-->
+<script>
+    var arr = [1,2,3];
+    arr.forEach(function(item,index){
+        //遍历数组的所有元素
+        console.log(index,item)
+    })
+</script>
+<!--every 判断所有元素是否都符合条件-->
+<script>
+    var arr1 = [1,2,3];
+    var result = arr1.every(function(item,index){
+        //用来判断所有的数组元素，都满足一个条件
+        if(item<4){
+            return true
+        }
+    })
+    console.log(result);
+</script>
+<!--some 判断是否有至少一个元素符合条件-->
+<script>
+    var arr2 = [1,2,3];
+    var result1 = arr2.some(function(item,index){
+        //用来判断所有的数组元素，只要有一个满足条件即可
+        if(item<2){
+            return true
+        }
+    })
+    console.log(result1);
+</script>
+<!--sort 排序-->
+<script>
+    var arr3 = [1,4,2,3,5];
+    var arr4 = arr3.sort(function(a,b){
+        //从小到大
+        return a-b
+
+        //从大到小
+        //return b-a
+    })
+    console.log(arr4);
+</script>
+<!--map 对元素重新组装，生成新数组-->
+<script>
+    var arr5 = [1,2,3,4];
+    var arr6 = arr5.map(function(item,index){
+        //将元素重新组装，并返回
+        return '<b>'+ item +'</b>'
+    })
+    console.log(arr6);
+</script>
+<!--filter 过滤符合条件的元素-->
+<script>
+    var arr7 = [1,2,3,4];
+    var arr8 = arr7.filter(function(item,index){
+        //通过某一个条件过滤数组
+        if(item>=2){
+            return true
+        }
+    })
+    console.log(arr8);
+</script>
+
+
+<!--对象api就是一个for in-->
+<script>
+    var obj = {
+        x:100,
+        y:200,
+        z:300
+    };
+    var key;
+    for(key in obj){
+        //注意这里的hasOwnProperty，
+        if(obj.hasOwnProperty(key)){
+            console.log(key,obj[key])
+        }
+    }
+</script>
+
+<!--获取2017-06-1格式的日期-->
+
+<script>
+    function formatDate(dt){
+        if(!dt){
+            dt = new Date()
+        }
+        var year = dt.getFullYear();
+        var month = dt.getMonth() + 1;
+        var date = dt.getDate();
+        if(month<10){
+            //强制类型转换
+            month = '0' + month
+        }
+        if(date < 10){
+            //强制类型转换
+            date = '0' + date
+        }
+        //强制类型转换
+        return year + '-' +month +'-'+date;
+    }
+    var dt = new Date();
+    var formatDate = formatDate(dt);
+    console.log(formatDate)
+</script>
+<!--获取随机数，要求长度一致的字符串格式-->
+<script>
+    var random = Math.random();
+    var random = random + '0000000000';
+    var random = random.slice(0,10)
+    console.log(random)
+</script>
+
+<!--写一个能遍历对象和数组的通用forEach函数-->
+<script>
+    function forEach(obj,fn){
+        var key;
+        if(obj instanceof  Array){
+            obj.forEach(function(item,index){
+                fn(index,item)
+            })
+        }else{
+            for(key in obj){
+                if(obj.hasOwnProperty(key)){
+                   fn(key,obj[key])
+                }
+            }
+        }
+    }
+    // 下面是调用
+    var arr = [1,2,3];
+    forEach(arr,function(index,item){
+       console.log(index,item)
+    });
+    var obj = {x:10,y:20};
+    forEach(obj,function(key,val){
+        console.log(key,val)
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css部分</title>
+</head>
+<body>
+1、css sprite是什么,有什么优缺点
+概念：将多个小图片拼接到一个图片中。通过background-position和元素尺寸调节需要显示的背景图案。
+优点：
+减少HTTP请求数，极大地提高页面加载速度
+增加图片信息重复度，提高压缩比，减少图片大小
+更换风格方便，只需在一张或几张图片上修改颜色或样式即可实现
+缺点：
+图片合并麻烦
+维护麻烦，修改一个图片可能需要从新布局整个图片，样式
+
+
+2、display: none;与visibility: hidden;的区别
+联系：它们都能让元素不可见
+区别：
+display:none;会让元素完全从渲染树中消失，渲染的时候不占据任何空间；visibility: hidden;不会让元素从渲染树消失，渲染师元素继续占据空间，只是内容不可见
+display: none;是非继承属性，子孙节点消失由于元素从渲染树消失造成，通过修改子孙节点属性无法显示；visibility: hidden;是继承属性，子孙节点消失由于继承了hidden，通过设置visibility: visible;可以让子孙节点显式
+修改常规流中元素的display通常会造成文档重排。修改visibility属性只会造成本元素的重绘。
+读屏器不会读取display: none;元素内容；会读取visibility: hidden;元素内容
+
+
+3、link与@import的区别
+link是HTML方式， @import是CSS方式
+link最大限度支持并行下载，@import过多嵌套导致串行下载，出现FOUC
+link可以通过rel="alternate stylesheet"指定候选样式
+浏览器对link支持早于@import，可以使用@import对老浏览器隐藏样式
+@import必须在样式规则之前，可以在css文件中引用其他文件
+总体来说：link优于@import
+
+
+4、什么是FOUC?如何避免
+Flash Of Unstyled Content：用户定义样式表加载之前浏览器使用默认样式显示文档，用户样式加载渲染之后再从新显示文档，造成页面闪烁。
+解决方法：把样式表放到文档的head
+
+
+5、如何创建块级格式化上下文(block formatting context),BFC有什么用
+创建规则：
+根元素
+浮动元素（float不是none）
+绝对定位元素（position取值为absolute或fixed）
+display取值为inline-block,table-cell, table-caption,flex, inline-flex之一的元素
+overflow不是visible的元素
+作用：
+可以包含浮动元素
+不被浮动元素覆盖
+阻止父子元素的margin折叠
+
+
+
+6、display,float,position的关系
+如果display为none，那么position和float都不起作用，这种情况下元素不产生框
+否则，如果position值为absolute或者fixed，框就是绝对定位的，float的计算值为none，display根据下面的表格进行调整。
+否则，如果float不是none，框是浮动的，display根据下表进行调整
+否则，如果元素是根元素，display根据下表进行调整
+其他情况下display的值为指定值
+总结起来：绝对定位、浮动、根元素都需要调整display
+
+
+7、清除浮动的几种方式，各自的优缺点
+父级div定义height
+结尾处加空div标签clear:both
+父级div定义伪类:after和zoom
+父级div定义overflow:hidden
+父级div也浮动，需要定义宽度
+结尾处加br标签clear:both
+比较好的是第3种方式，好多网站都这么用
+
+
+8、为什么要初始化CSS样式?
+因为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。
+当然，初始化样式会对SEO有一定的影响，但鱼和熊掌不可兼得，但力求影响最小的情况下初始化
+
+
+9、css3有哪些新特性
+新增各种css选择器
+圆角 border-radius
+多列布局
+阴影和反射
+文字特效text-shadow
+线性渐变
+旋转transform
+<!--
+CSS3新增伪类有那些：
+p:first-of-type 选择属于其父元素的首个<p>元素的每个<p> 元素。
+p:last-of-type 选择属于其父元素的最后 <p> 元素的每个<p> 元素。
+p:only-of-type 选择属于其父元素唯一的 <p>元素的每个 <p> 元素。
+p:only-child 选择属于其父元素的唯一子元素的每个 <p> 元素。
+p:nth-child(2) 选择属于其父元素的第二个子元素的每个 <p> 元素。
+:after 在元素之前添加内容,也可以用来做清除浮动。
+:before 在元素之后添加内容
+:enabled
+:disabled 控制表单控件的禁用状态。
+:checked 单选框或复选框被选中-->
+
+10、display有哪些值？说明他们的作用
+block 象块类型元素一样显示。
+none 缺省值。象行内元素类型一样显示。
+inline-block 象行内元素一样显示，但其内容象块类型元素一样显示。
+list-item 象块类型元素一样显示，并添加样式列表标记。
+table 此元素会作为块级表格来显示
+inherit 规定应该从父元素继承 display 属性的值
+
+
+11、介绍一下标准的CSS的盒子模型？低版本IE的盒子模型有什么不同的？
+有两种， IE盒子模型、W3C盒子模型；
+盒模型： 内容(content)、填充(padding)、边界(margin)、 边框(border)；
+区 别： IE的content部分把 border 和 padding计算了进去;
+
+
+12、CSS优先级算法如何计算？
+优先级就近原则，同权重情况下样式定义最近者为准
+载入样式以最后载入的定位为准
+优先级为: !important > id > class > tag important 比 内联优先级高
+
+
+13、对BFC规范的理解？
+它决定了元素如何对其内容进行定位,以及与其他元素的关系和相互作用
+
+
+14、谈谈浮动和清除浮动
+浮动的框可以向左或向右移动，直到他的外边缘碰到包含框或另一个浮动框的边框为止。由于浮动框不在文档的普通流中，所以文档的普通流的块框表现得就像浮动框不存在一样。浮动的块框会漂浮在文档普通流的块框上
+
+
+15、position的值， relative和absolute定位原点是
+absolute：生成绝对定位的元素，相对于 static 定位以外的第一个父元素进行定位
+fixed：生成绝对定位的元素，相对于浏览器窗口进行定位
+relative：生成相对定位的元素，相对于其正常位置进行定位
+static 默认值。没有定位，元素出现在正常的流中
+inherit 规定从父元素继承 position 属性的值
+
+
+16、display:inline-block 什么时候不会显示间隙？(携程)
+移除空格
+使用margin负值
+使用font-size:0
+letter-spacing
+word-spacing
+
+
+17、PNG,GIF,JPG的区别及如何选
+GIF
+8位像素，256色
+无损压缩
+支持简单动画
+支持boolean透明
+适合简单动画
+
+JPEG
+颜色限于256
+有损压缩
+可控制压缩质量
+不支持透明
+适合照片
+
+PNG
+有PNG8和truecolor PNG
+PNG8类似GIF颜色上限为256，文件小，支持alpha透明度，无动画
+适合图标、背景、按钮
+
+18、行内元素float:left后是否变为块级元素？
+浮动后，行内元素不会成为块状元素，但是可以设置宽高。行内元素要想变成块状元素，占一行，直接设置display:block;。但如果元素设置了浮动后再设置display:block;那就不会占一行。
+
+
+19、在网页中的应该使用奇数还是偶数的字体？为什么呢？
+偶数字号相对更容易和 web 设计的其他部分构成比例关系
+
+
+20、::before 和 :after中双冒号和单冒号 有什么区别？解释一下这2个伪元素的作用
+单冒号(:)用于CSS3伪类，双冒号(::)用于CSS3伪元素
+用于区分伪类和伪元素
+
+
+21、如果需要手动写动画，你认为最小时间间隔是多久，为什么？（阿里）
+多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔为1/60＊1000ms ＝ 16.7ms
+
+
+22、CSS合并方法
+避免使用@import引入多个css文件，可以使用CSS工具将CSS合并为一个CSS文件，例如使用Sass\Compass等
+
+
+23、CSS不同选择器的权重(CSS层叠的规则)
+！important规则最重要，大于其它规则
+行内样式规则，加1000
+对于选择器中给定的各个ID属性值，加100
+对于选择器中给定的各个类属性、属性选择器或者伪类选择器，加10
+对于选择其中给定的各个元素标签选择器，加1
+如果权值一样，则按照样式规则的先后顺序来应用，顺序靠后的覆盖靠前的规则
+
+
+24、列出你所知道可以改变页面布局的属性
+position、display、float、width、height、margin、padding、top、left、right、
+
+
+25、CSS在性能优化方面的实践
+css压缩与合并、Gzip压缩
+css文件放在head里、不要用@import
+尽量用缩写、避免用滤镜、合理使用选择器
+
+
+26、CSS3动画（简单动画的实现，如旋转等）
+依靠CSS3中提出的三个属性：transition、transform、animation
+transition：定义了元素在变化过程中是怎么样的，包含transition-property、transition-duration、transition-timing-function、transition-delay。
+transform：定义元素的变化结果，包含rotate、scale、skew、translate。
+animation：动画定义了动作的每一帧（@keyframes）有什么效果，包括animation-name，animation-duration、animation-timing-function、animation-delay、animation-iteration-count、animation-direction
+
+
+
+27、base64的原理及优缺点
+优点可以加密，减少了http请求
+缺点是需要消耗CPU进行编解码
+
+</body>
+</html>

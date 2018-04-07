@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM事件</title>
+</head>
+<body>
+<!--DOM事件的级别：-->
+<!--1、DOM0：element.onclick=function(){}-->
+<!--2、DOM2：element.addEventListener('click',functiong(){},false)-->
+<!--3、DOM3：element.addEventListener('keyup',functiong(){},false) 在2的基础上增加了很多事件类别-->
+
+
+<!--事件模型：就是捕获和冒泡-->
+<!--捕获是从上往下-->
+<!--冒泡是从目标元素往上-->
+
+<!--事件流：浏览器在为当前页面与用户做交互的过程中比如说点击了鼠标然后传到页面上怎么响应的就是事件流-->
+<!--事件流分三个阶段：第一阶段是捕获；第二阶段为目标阶段比如说点击了一下鼠标按钮等；第三阶段是冒泡的过程-->
+<!--也就是事件通过捕获到达目标元素，从目标元素在上传到window对象，也就是冒泡的过程-->
+
+<!--描述DOM事件捕获的具体流程；首先是由上到下，是由window->document->html->body->然后一层一层到达目标元素-->
+<!--冒泡与上面的相反-->
+
+<!--Event对象的常见应用-->
+<!--event.preventDefault() 阻止默认事件-->
+<!--event.stopPropagation() 阻止事件冒泡-->
+<!--event.stoplmmediatePropagation()举个例子就是一个元素绑定两个事件a和b件；但是我想让他执行a不执行b；在a里面加上这个就可以实现-->
+<!--event.currentTarget 当前所绑定的事件的元素-->
+<!--event.target 一般会出现代理题目基础里面有简介-->
+
+<!--自定义事件-->
+<script>
+    var eve = new Event('custome');
+    ev.addEventListener('custome',function(){//ev是获取的元素
+        console.log('custome');
+    });
+    ev.dispatchEvent(eve)//用dispatchEvent这个来触发自定义事件
+</script>
+</body>
+</html>

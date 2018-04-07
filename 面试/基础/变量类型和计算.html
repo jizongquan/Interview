@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>变量类型和计算</title>
+</head>
+<body>
+<!--根据题目来扩充知识点 举例几个题目-->
+<!--js中使用typeof能得到哪些类型；如何使用===和==；js中有哪些内置函数；js变量按照存储方式区分哪些类型，并描述其特点；如何理解json-->
+
+<!--变量类型-->
+<!--变量类型：分为值类型和引用类型-->
+<script>
+ //按存储方式分为值类型和引用类型；值类型是分块存储在内存中，值类型的值不会相互干涉，引用类型是好几个变量共用一个内存块节省内存空间
+//    值类型 每个变量都会存储各自的值不会相互影响；值类型有undefined string number boolean
+    var a = 100;
+    var b = a ;
+    a = 200;
+    console.log(b)//100
+
+//    引用类型有对象，数组，函数
+//    特点可以扩展属性
+    var c={age:20};
+    var d=c;
+    d.age=21;
+    console.log(c.age)//21
+
+</script>
+
+<!--typeof详解 例子-->
+<!--typeof 只能区分值类型的详细类型；不能区分引用类型 但是能区分是否是函数-->
+<script>
+    typeof undefined //undefined
+    typeof 'abc'//string
+    typeof 123 //number
+    typeof true //boolean
+    typeof {}//object
+    typeof []//object
+    typeof null//object
+    typeof  console.log//function
+</script>
+
+
+
+
+<!--变量计算 --强制类型转换-->
+<!--会发生类型转换的情况：字符串拼接；==运算符；if语句；逻辑运算-->
+<!--字符串拼接例子-->
+<!--默认会转换成false的有：0；NaN；'';null；undefined；false-->
+<script>
+    var a1 = 100 + 10;//110
+    var b1 = 100 +'10';//10010
+</script>
+<!--==运算符例子-->
+<script>
+    100 == '100' //true
+    0 == '';//true
+    null == undefined //true
+</script>
+
+
+<!--使用typeof能得到哪些类型；如何使用===和==；js中有哪些内置函数；js变量按照存储方式区分哪些类型，并描述其特点；如何理解json-->
+
+<!--何时使用==，===是没有强制类型转换的-->
+<script>
+    if(obj.f == null){
+        //这里相当于obj.f === null || obj.f === undefined
+        //这是jquery 源码中推荐的写法
+    }
+</script>
+
+
+<!--js中有哪些内置函数 在不考虑浏览器环境的前提下-->
+<!--object;Array;Boolean;Number;String;Function;Date;RegExp;Error-->
+
+
+<!--如何理解json：json是js中一个对象；同时也是一种数据格式-->
+<script>
+    JSON.stringify({a:10,b:10});//把对象变成字符串
+    JSON.parse('{"a":10,"b":20}')//把字符串变成对象
+</script>
+</body>
+</html>

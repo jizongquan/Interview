@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>mvvm</title>
+</head>
+<body>
+<!--首先MVC（Model view constructor）-->
+<!--MVVM就是Model View ViewModel-->
+
+<!--双向绑定原理-->
+<!--view->data;data->view-->
+<script>
+    //Object.defineProperty的作用他能监听到data变化，同时它在监听变化的时候有个回调函数，在这个回调函数里面直接写出view和data的关联关系
+    //vue如何实现双向数据绑定的
+    //Object.defineProperty(obj，prop，descriptor)函数
+    var obj ={pwd:"123456"};
+    Object.defineProperty(obj,"userNames",{
+        set:function(val){
+            console.log("set init");
+            document.getElementById("uName").innerText=val;
+
+        },
+        get:function(){
+            console.log("get init");
+        }
+    });
+    document.getElementById("userName").addEventListener("keyup",function(event){
+        obj.userNames=event.target.value;
+    })
+</script>
+<!--属于观察者模式，第一要个监听者，发生变化后会通知所有的观察者列表-->
+
+</body>
+</html>

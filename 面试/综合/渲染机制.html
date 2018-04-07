@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>渲染机制</title>
+</head>
+<body>
+<!--什么事DOCTYPE及作用-->
+<!--DTD（document type definition 文档类型定义）是一系列的语法规则，用来定义XML或(X)HTML的文件类型
+。浏览器会使用它来判断文档类型，决定使用何种协议来解析，以及切换浏览器模式-->
+<!--DTD通俗的讲就是告诉浏览器我是什么文档类型，浏览器根据这个来判断用什么引擎来解析它-->
+<!--DOCTYPE是用来声明文档类型和DTD规范的，一个主要的用途便是文件的合法性验证，如果文件代码不合法，那么浏览器解析时便会出现一些错误-->
+
+<!--常见的DOCTYPE有哪些-->
+<!--1、html5的是<!DOCTYPE html>-->
+<!--2、HTML4.01 严格模式(该DTD包含所有HTMl元素和属性，但不包括展示性的和弃用的元素如font)-->
+<!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">-->
+
+<!--3、HTML4.01 传统模式(该DTD包含所有HTMl元素和属性，包括展示性的和弃用的元素如font)-->
+<!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transition//EN" "http://www.w3.org/TR/html4/loose.dtd">-->
+
+
+<!--浏览器渲染过程-->
+<!-- 浏览器拿到html 和css之后，将html经过 htmlParser转成domTree，css根据css规则转成cssomTree，最后他两整合形成了RenderTree；
+与RenderTree平行的有个Layout，通过layout就可以精确的计算出要显示的元素的位置和宽高颜色等都在RenderTree呈现出来，最后呈现出来内容-->
+<!--注：domtree就是html节点从上到下进行分析-->
+
+<!--重排Reflow-->
+<!--DOM结构中的各个元素都有自己的（模型），这些都需要浏览器根据各种样式来计算并根据计算结果将元素放到它该出现的位置，这个过程称之为reflow-->
+
+<!--触发Reflow-->
+<!--增加、删除、修改DOM节点时，会导致Reflow或Repaint-->
+<!--移动DOM的位置，或是搞个动画的时候-->
+<!--修改css样式的时候-->
+<!--Resize窗口的时候（移动端没有这个问题），或者滚动的时候有可能触发-->
+<!--修改网页的默认字体时-->
+
+
+<!--重绘Repaint-->
+<!--当各种盒子的位置、大小以及其他属性，例如颜色、字体大小等都确定下来后，浏览器于是便把这些元素都按照各自的特性绘制了一遍，于是页面的内容出现了，这个过程称之为repaint-->
+
+<!--触发Repaint-->
+<!--DOM改动-->
+<!--CSS改动-->
+
+<!--浏览器渲染过程-->
+
+
+<!--重排Reflow-->
+
+
+<!--重绘Repaint-->
+
+
+<!--布局Layout（这里是浏览器Layout）-->
+</body>
+</html>

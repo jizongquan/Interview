@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM和BOM</title>
+</head>
+<body>
+<!--js-web-API:js基础知识是遵循ECMA262标准；js-WEB-API是遵循W3C标准-->
+
+<!--DOM就是Document Object Model 文档对象模型-->
+<!--题目：DOM是哪种基本的数据结构；DOM操作的常用API有哪些；DOM节点的attr和property有何区别-->
+
+<!--DOM本质就是将html进行了结构化，结构化成了一个浏览器可识别js可识别的模型-->
+
+<!--DOM节点操作-->
+<!--1、获取DOM节点-->
+<script>
+    //原生js获取元素和类的方式
+    var div1 = document.getElementById('div1')//获取元素
+    var divList = document.getElementsByName('div')//获取集合
+    console.log(divList.length);
+    console.log(divList[0]);
+
+    var containerList = document.getElementsByClassName('.container')//获取集合
+    var pList = document.querySelectorAll('p')//获取集合
+</script>
+
+<!--2、DOM结构操作-->
+<script>
+    var div2 =document.getElementById('div2')
+    //添加新节点
+    var p1 = document.createElement('p');
+    p1.innerHTML = 'this is p1';
+    div2.appendChild(p1)//添加新节点
+
+    //移动已有节点 假设已有p2
+    var p2=document.getElementById('p2')
+    div2.appendChild(p2)
+
+    //获取父元素和子元素
+    var div3 = document.getElementById('div3');
+    var parent = div3.parentElement;
+
+    var child = div3.childNodes;//获取子元素集合
+    div3.removeChild(child[0]);
+
+</script>
+<!--DOM是哪种基本的数据结构：树结构-->
+<!--DOM操作的常用API有哪些：获取DOM节点，以及节点的property和Attribute;获取父节点，获取子节点；新增节点，删除节点-->
+<!--DOM节点的Attribute和property有何区别：-->
+<!--property只是一个js对象的属性的修改-->
+<!--Attribute是对html标签属性的修改-->
+
+
+<!--BOM：Browser Object Model 浏览器对象模型-->
+<!--题目：如何检测浏览器的类型；拆解url各部分-->
+
+<!--navigator：浏览器；基本用法如下；检测浏览器类型-->
+<script>
+    var ua = navigator.userAgent;
+    var isChrome = ua.indexOf('Chrome');
+    console.log(isChrome)
+</script>
+<!--screen：屏幕-->
+<script>
+    console.log(screen.width)
+    console.log(screen.height)
+</script>
+<!--loaction：地址-->
+<script>
+    console.log(location.href)//打印整个url
+    console.log(location.protocol)//协议http:或者https
+    console.log(location.host)//域名
+    console.log(location.pathname)//域名后面的路径比如/learn
+    console.log(location.search)//shi 地址里面？后面的参数
+    console.log(location.hash)//#后面的
+</script>
+<!--history“前进后退-->
+<script>
+    history.back()//返回
+    history.forward()//前进
+</script>
+
+
+</body>
+</html>

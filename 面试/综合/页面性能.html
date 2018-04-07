@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>页面性能</title>
+</head>
+<body>
+<!--提升页面性能的方法有哪些-->
+<!--1、资源压缩合并，减少HTTP请求-->
+<!--2、非核心代码异步加载-->
+<!--3、利用浏览器缓存-->
+<!--4、使用CDN-->
+<!--5、预解析DNS(下面两种)-->
+<!--<meta http-equiv='x-dns-prefetch-control' content='on'> 这个是强制打开a标签DNS的预解析-->
+<!--<link rel='dns-prefetch' href='//host_name_to_prefetch.com'>-->
+
+<!--异步加载的方式-->
+<!--1、动态脚本加载-->
+<!--2、defer，加在script标签里-->
+<!--3、async 加在script标签里-->
+
+<!--异步加载的区别-->
+<!--1、defer是在HTML解析完之后才会执行，如果是多个，安装加载的顺序依次执行-->
+<!--2、async是在加载完之后立即执行，如果是多个，执行顺序和加载顺序无关-->
+
+<!--浏览器缓存-->
+<!--缓存的分类:强缓存和协商缓存-->
+
+<!--强缓存:直接缓存，如果下面两个同时下发以后者为准-->
+<!--1、Expires翻译过来就是过期时间，这里是绝对时间-->
+<!--2、Cache-Control这里是相对时间-->
+
+<!--协商缓存：指的是和服务器协商-->
+<!--Last-Modified（这个是服务器下发的） if-Modified-Since（这个是请求的时候带着的）这个就是指上次修改的时间然后这两个做对比-->
+<!--Etag（这个是hash值） if-None-Match-->
+
+<!--跟缓存相关的http协议头有哪些-->
+<!--Last-Modified；if-Modified-Since；Etag；Expires；Cache-Control；if-None-Match-->
+</body>
+</html>

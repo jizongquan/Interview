@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+</head>
+<body>
+<!--题目：编写 一个通用的事件监听函数；描述事件冒泡流程；对于一个无限下拉加载图片的页面，如何给每个图片绑定事件-->
+
+<!--通用事件绑定-->
+<script>
+    var btn = document.getElementById('btn1');
+    btn.addEventListener('click',function(event){
+        console.log('clicked')
+    });
+
+    //一个通用函数
+    function  bindEvent(elem,type,fn){
+        elem.addEventListener(type,fn);
+    }
+    var a =document.getElementById('link1');
+    bindEvent(a,'click',function(e){
+        e.preventDefault();
+        alert('clicked')
+    })
+</script>
+
+<!--ie低版本的兼容 使用attachEvent绑定事件；和W3C标准不一样-->
+
+<!--事件冒泡例子-->
+<script>
+    var p1 = document.getElementById('p1');
+    var body = document.body;
+    bindEvent(p1,'click',function(e){
+        e.stopPropagation()
+        alert('激活')
+    });
+    bindEvent(body,'click',function(e){
+        alert('激活')
+    })
+</script>
+
+<!--事件冒泡的应用=》代理-->
+<script>
+    //这个示例是指如果点击的是a元素就会弹出a元素里面的内容
+    var div2 = document.getElementById('div2');
+    div2.addEventListener('click',function(e){
+        var target = e.target;
+        if(target.nodeName ==='A'){
+            alert(target.innerHTML);
+        }
+    })
+</script>
+
+<!--相对完美的通用绑定事件的函数示例-->
+<script>
+    function bindEvent(elem,type,selector,fn){
+        if(fn==null){
+            fn = selector;
+            selector = null
+        }
+        elem.addEventListener(type,function(e){
+            var target;
+            if(selector){
+                target= e.target;
+                if(target.matches(selector)){
+                    fn.call(target,e)
+                }
+            }else{
+                fn(e)
+            }
+        })
+    };
+    //具体应用
+    //使用代理
+    var div3 = document.getElementById('div3');
+    bindEvent(div3,'click','a',function(e){
+        console.log(this.innerHTML)
+    })
+    //不使用代理
+    var a = document.getElementById('a1');
+    bindEvent(div3,'click',function(e){
+        console.log(a.innerHTML)
+    })
+    //代理的好处：减少浏览器内存占用
+</script>
+</body>
+</html>

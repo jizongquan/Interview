@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作用域和闭包</title>
+</head>
+<body>
+<!--题目：说一下对变量提升的理解；说明this几种不同的使用场景；创建10个<a>标签，点击的时候弹出来对应的序号；如何理解作用域；事件开发中闭包的应用;-->
+
+<!--执行上下文-->
+<!--范围：一段<script>或者一个函数，然后先去把变量声明、函数声明、this、arguments拿出来提到前面；-->
+<script>
+    console.log(a)//undefined
+    var a = 100;
+
+    fn('lisi');//lisi,20
+    function fn(name){
+        age=20;
+        console.log(name,age);
+        var age
+    }
+</script>
+
+
+<!--this要在执行时才能确认值，定义时无法确认-->
+<!--使用场景：1、作为构造函数执行；2、作为对象属性执行；3、作为普通函数执行；4、call，apply，bind-->
+<script>
+    //例子
+    var b = {
+        name: "B",
+        fn:function(){
+            console.log(this.name)
+        }
+    };
+    b.fn();//this ===b
+    b.fn.call({name:"C"});//this ==={name:"C"}
+    var fn1 = b.fn;
+    fn1();//this === window
+    //下面例子对应上面的场景
+    //1、作为构造函数
+    function  Foo(name){
+        this.name = name//this就是Foo
+    };
+    var f = new Foo('lisi');
+    //2、作为对象属性执行
+    var obj = {
+        name:"A",
+        printName:function(){
+            console.log(this.name)
+        }
+    };
+    obj.printName()//this 就是obj
+
+    //3、作为普通函数执行
+    function fn2(){
+        console.log(this) //this就是window
+    };
+    //4、call，apply，bind
+    function fn3(name){
+        alert(name);
+        console.log(this)//这样this就是x:100第一个参数
+    };
+    fn3.call({x:100},'lisi')
+</script>
+
+
+<!--作用域-->
+<!--如何理解作用域：自由变量，作用域链，即自由变量的查找，闭包的两个场景-->
+<!--js没有块级作用域-->
+<script>
+    //无块级作用域
+    if(true){
+        var name = 'jizongquan'
+    }
+    console.log(name)//jizongquan
+</script>
+
+<!--函数和全局作用域-->
+<script>
+    //函数和全局作用域
+    var a = 100;
+    function jq(){
+        var a = 200;
+        console.log('jq',a)//200
+    }
+    console.log('global',a)//100
+    jq()
+</script>
+
+<!--作用域链-->
+<!--作用域链就是一个自由变量一直不断的往父级作用域找；形成一个链式结构-->
+<script>
+    var b = 100;
+    function jq1(){
+        var c = 200
+        //单枪作用域没有定义的变量，即“自由变量”
+        console.log(b);//100
+        console.log(c);//200
+    }
+    jq1()
+</script>
+
+
+<!--闭包-->
+<!--闭包的使用场景：1、函数作为返回值；2、函数作为参数传递-->
+
+<script>
+    //1、函数作为返回值
+    function F1(){
+        var d = 100;
+        //返回一个函数（函数作为返回值）
+        return function (){
+            console.log(d);//100
+        }
+    }
+    //f1得到一个函数
+    var f1 = F1();
+    var d = 200;
+    f1();//100
+
+
+    //2、函数作为参数传递
+
+    function F1(){
+        var d = 100;
+        return function (){
+            console.log(d);
+        }
+    }
+    var f1 = F1();
+    function F2(fn){
+        var d =200
+        fn()
+    }
+    F2(f1)//100
+</script>
+
+<!--创建10个<a>标签，点击的时候弹出来对应的序号-->
+<script>
+    var i;
+    for(i=0;i<10;i++){
+        (function(i){
+            var c= document.createElement('a');
+            c.innerHTML = i + '<br>';
+            c.addEventListener("click",function(e){
+                e.preventDefault();
+                alert(i)
+            })
+            document.body.appendChild(c)
+        })(i)
+    }
+</script>
+
+<!--实际开发中闭包的应用-->
+<!--主要用于封装变量，收敛权限-->
+<script>
+    function isFirstLoad(){
+        var _list = [];
+        return function (id){
+            if(_list.indexOf(id) >= 0){
+                return false
+            }else{
+                _list.push(id)
+                return true
+            }
+        }
+    }
+    //使用
+    var firstLoad = isFirstLoad();
+    firstLoad(10)//true
+    firstLoad(10)//false
+    firstLoad(20)//true
+</script>
+
+</body>
+</html>

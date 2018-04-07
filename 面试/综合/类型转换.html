@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类型转换</title>
+</head>
+<body>
+<!--类型转换分为：显示类型和隐示类型-->
+
+<!--数据类型分为原始类型和对象-->
+<!--原始类型：Boolean，null，Undefined，Number，String，Symbol（这个是es6中的）-->
+<!--对象Object-->
+
+<!--显示类型转换-->
+<!--1、Number函数-->
+
+<!--a、数值：转换后还是原来的值-->
+<script>
+    console.log(Number(324))//324
+</script>
+<!--b、字符串：如果可以被解析为数值，则转换相应的数值；否则得到NaN，空字符串转为0-->
+<script>
+    console.log(Number('324abc'))//NaN
+    console.log(Number(''))//0
+</script>
+<!--c、true转成1，false转成0-->
+<script>
+    console.log(Number(false))//0
+</script>
+<!--d、undefined：转成NaN-->
+<script>
+    console.log(Number(undefined))//NaN
+</script>
+<!--e、null：转成0-->
+<script>
+    console.log(Number(null))//0
+</script>
+<!--f、对象类型转换：先调用对象自身的valueOf方法，如果该方法返回原始类型的值（数值、字符串和布尔值），则直接对该值使用Number方法，不在进行后续步骤-->
+<!--如果valueOf方法返回复合类型的值，再调用对象自身的toString方法，如果toString方法返回原始类型的值，则对该值使用Number方法，不再进行后续步骤-->
+<!--如果toString方法返回的是复合类型的值，则报错-->
+<script>
+    console.log('a',Number({a:1}))//a:NaN
+</script>
+
+
+<!--2、String函数-->
+
+<!--a、数值：转为相应的字符串-->
+<script>
+    console.log('a',String(123))//"123"
+</script>
+<!--b、字符串：转换后还是原来的值-->
+<script>
+    console.log('a',String('abc'))//"abc"
+</script>
+<!--c、布尔值：true转为“true”；false转为“false”-->
+<script>
+    console.log('a',String(true))//"true"
+</script>
+<!--d、undefined：转为undefined-->
+<script>
+    console.log('a',String(undefined))//"undefined"
+</script>
+<!--e、null：转为null-->
+<script>
+    console.log('a',String(null))//"null"
+</script>
+
+<!--f、对象类型转换：先调用toString方法，如果toString方法返回的是原始类型的值，则对该值使用String方法
+，不在继续进行；如果toString方法返回的是符合类型的值，再调用valueOf方法，如果valueOf方法返回的是原始类型的值，
+则对该值使用String方法，不再进行以下步骤；如果valueOf方法返回的是复合类型的值，则报错-->
+
+<script>
+    console.log('a',String({a:1}))//a [object Object]
+</script>
+
+<!--3、Boolean函数-->
+<!--如果遇到undefined、null、-0、+0、NaN、''（空字符串）都转换成false；除了这些都是转换成true-->
+<!--一个例子代表-->
+<script>
+    console.log(Boolean(undefined))//false
+</script>
+
+
+
+
+
+<!--隐式类型转换；发生的情况：四则运算、判断语句、Native调用-->
+<!--一些小题目-->
+<script>
+    []+[];//""
+    []+{};//"[object Object]"
+    {}+[];//0
+    {}+{};//"谷歌下是[object Object][object Object]" 火狐下是NaN
+    true + true;//2
+    1 + {a:1}//"1[object Object]"
+</script>
+
+</body>
+</html>

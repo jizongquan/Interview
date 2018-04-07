@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原型链</title>
+</head>
+<body>
+<!--创建对象有几种方法-->
+<script>
+    //字面量对象
+    var o1 = {name:'o1'};
+    // new操作符创建对象此条就是下面的构造函数
+    // var o11 = new Object({name:'o11'});
+</script>
+<script>
+    //使用构造函数创建对象
+    var M1 = function(){this.name='o2'};
+    var o2 = new M1();
+</script>
+<script>
+    //Object.create
+    var P = {name:'o3'};
+    var o3 = Object.create(P);
+</script>
+
+<!--理解：首先构造函数可以通过new来生成实例；函数都有一个prototype属性，prototype指的就是原型对象，原型对象中会有个构造器constructor；
+这个构造器会默认指向你声明的那个构造函数；通过new生成的实例的_proto_全等于构造函数的prototype；-->
+
+<!--原型链就是说我从我的一个实例对象网上找构造这个实例的相关联的对象，然后这个关联的对象再往上找它又有创造它的上一级的原型对象，以此类推一直到object.prototype终止，这个链条就断了-->
+<!--例子-->
+<script>
+    var M1 = function(){this.name='o2'};//这个构造函数
+    var o2 = new M1();//这个是实例
+    o2 instanceof M1//true
+    o2 instanceof  Object//true
+    o2.__proto__===M1.prototype//true
+    M1.prototype._proto_===Object.prototype//true
+    //用constructor判断比instanceof更严谨 例子
+    o2.__proto__.constructor === M1//true
+    o2.__proto__.constructor === Object//false
+</script>
+
+
+<!--new运算符-->
+<!--就是一个对象被创建，它继承构造函数的prototype（也就是原型对象）；构造函数被执行，执行的时候，上下文也就是this，
+会被指定为这个新实例，如果构造函数返回了一个对象，那么这个对象会取代整个new出来的结果，如果构造函数没有返回对象，
+那么new出来的结果就是之前创建的对象-->
+<!--下面模拟一个new运算符的例子代码-->
+<script>
+    var new2 = function(func){
+        // 第一步创建空对象，空对象要关联构造函数的原型对象
+        var o = Object.create(func.prototype)
+        // 第二步执行构造函数
+        var k=func.call(o)
+        // 第三步判断构造函数的运行结果是不是对象类型，如果是对象就返回构造函数如果不是就返回刚创建的对象o
+        if(typeof k === 'object'){
+            return k
+        }else{
+            return o
+        }
+    }
+</script>
+</body>
+</html>

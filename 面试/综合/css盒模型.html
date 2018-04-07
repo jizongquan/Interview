@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css盒模型</title>
+</head>
+<body>
+<!--css和模型基本概念：分为标准模型和IE模型-->
+<!--css盒模型（有border，margin，padding，content）-->
+
+<!--标准模型和ie模型区别：宽度和高度的计算方式不同；标准模型的宽度和高度不包括padding和border；ie模型的高度和宽度是包括padding和border-->
+
+<!--css 如何设置两种模型：标准盒模型是box-sizing:content-box;ie盒模型是box-sizing:border-box-->
+
+<!--js如何设置获取盒模型的宽和高 这里的dom是指获取到的元素-->
+<!--1、dom.style.width/height-->
+<!--2、dom.currentStyle.width/height（只支持ie）-->
+<!--3、window.getComputedStyle(dom).width/height(支持其他的浏览器)-->
+
+<!--根据实例来解释边距重叠-->
+<!--父子之间会存在边距重叠-->
+<!--边距重叠的解决方案BFC；BFC的概念是：块级格式化上下文-->
+<!--BFC的原理：就是BFC的渲染规则：1、BFC这个元素的垂直方向上的边距会发生重叠；2、BFC区域不会与浮动元素的box重叠用来清楚浮动的；
+3、BFC在页面上是一个独立的容器，外面的元素不会影响里面的元素，同理里面的元素也不会影响外面的；4、计算BFC高度的时候浮动元素也会参与计算-->
+
+<!--如何创建BFC：1、float值不为null；2、position值不为static；3、overflow不为visible;-->
+
+<!--BFC垂直方向边距重叠-->
+<div id="margin">
+    <style>
+        #margin{
+            background: pink;
+            /*创建BFC*/
+            overflow: hidden;
+        }
+        #margin p{
+            margin: 5px auto 25px;
+            background: red;
+        }
+    </style>
+    <p>1</p>
+    <div style="overflow: hidden">
+        <p>2</p>
+    </div>
+    <p>3</p>
+</div>
+
+<!--BFC不与float重叠-->
+<div id="layout" style="margin-top: 10px">
+    <style>
+        #layout{
+            background: red;
+        }
+        #layout .left{
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: pink;
+        }
+        #layout .right{
+            height: 110px;
+            background: #ccc;
+            /*创建BFC*/
+            overflow: auto;
+        }
+    </style>
+    <div class="left"></div>
+    <div class="right"></div>
+</div>
+
+<!--BFC子元素即使是float也会参与高度计算（BFC可以清楚浮动）-->
+<div id="float" style="margin-top: 10px">
+    <style>
+        #float{
+            /*穿件BFC*/
+            /*overflow: auto;*/
+            float: left;
+            background: red;
+        }
+        #float .float{
+            float: left;
+            height: 50px;
+        }
+    </style>
+    <div class="float">我是浮动元素</div>
+</div>
+</body>
+</html>

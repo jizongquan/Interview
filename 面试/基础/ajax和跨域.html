@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax</title>
+</head>
+<body>
+<!--题目：手动编写一个ajax，不依赖第三方库；跨域的几种实现方式；-->
+
+<!--XMLHttpRequest;简单写一个ajax实例-->
+<script>
+    var shr = new XMLHttpRequest();
+    xhr.open("GET","/api",false);//false这里面试指使用异步
+    xhr.onreadystatechange = function(){
+        //这里的函数异步执行
+        if(xhr.readyState == 4){
+            if(xhr.status == 200){
+                alert(xhr.responseText)//打出服务端返回的内容
+            }
+        }
+    }
+    xhr.send(null);
+    //ie低版本使用ActiveXObject
+</script>
+<!--readState 主要是4其他可以不用管-->
+<!--0（未初始化）还没有调用send()方法-->
+<!--1（载入）已调用send()方法，正在发送请求-->
+<!--2（载入完成）send()方法执行完成，已经接收到全部响应内容-->
+<!--3（交互）正在解析响应内容-->
+<!--4（完成）响应内容解析完成，可以在客户端调用了-->
+
+<!--status 状态码-->
+<!--2xx 表示成功处理请求 如200-->
+
+<!--3xx 需要重定向，浏览器直接跳转-->
+
+<!--4xx 客户端请求错误，如404-->
+
+<!--5xx 服务器错误；504连接超时-->
+
+<!--跨域-->
+<!--什么事跨域：浏览器有同源策略，就是不允许ajax访问其他域接口（http默认端口80；https默认端口443）-->
+<!--跨域条件（就是不同源）：协议、域名、端口、有一个不同就是跨域；-->
+
+<!--可以跨域的三个标签：1、<img src=xxx>;2、<link href=xxxx> 3、<script src=xxx>-->
+<!--三个标签的场景-->
+<!--<img>用于打点统计，统计网站可能是其他域-->
+<!--<link><script>可以使用CDN，CDN的也是其他域-->
+<!--<script>可以用于JSONP-->
+
+<!--跨域注意事项：1、所有的跨域请求都必须经过信息提供方允许；2、如果未经允许即可获取，那是浏览器同源策略出现漏洞-->
+
+<!--JSONP实现原理-->
+<!--就是请求的地址如果是跨域的，那么就让这个借口给你返回一个callBack，然后请求方在接收这个callBack-->
+<!--我们可以先定义一个函数，然后我们请求外域的一个api，api他返回的是一个js的片段，js片段正好执行这个函数，然后把参数传过来，这就是jsonp-->
+
+
+<!--还有就是 还可以让服务器段设置http header；但是需要服务器段来做-->
+<script>
+//    response.setHeader("Access-Control-Allow-Origin",'这里面是允许跨域的域名')
+</script>
+
+</body>
+</html>
