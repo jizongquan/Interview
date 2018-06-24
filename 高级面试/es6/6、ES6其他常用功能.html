@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ES6其他常用功能</title>
+</head>
+<body>
+<!--1、let/const-->
+<!--let可以定义变量，变量可以重新赋值；const是个常量不能重新赋值-->
+<script>
+    //js
+    var i =10;
+    i=100;
+    var j = 20;
+    j=200;
+
+    //es6
+    let i1 = 10;
+    i1=100;//正确
+    const j1 = 20;
+//    j1=200;//报错
+</script>
+
+
+<!--2、多行字符串/模板变量-->
+
+<!--3、解构赋值-->
+<script>
+    //js
+    var obj = {a:100,b:100};
+    var a=obj.a;
+    var b=obj.b;
+
+    var arr =['1','2','3'];
+    var x =arr[0]
+
+    //es6
+    const obj1 = {a:100,b:100,c:300};
+    const {a1,b1}=obj1;//a1=obj1.a；b1=obj1.b1
+    console.log(a1);
+    console.log(c1);
+
+    const arr1 =['1','2','3'];
+    const [x,y,z] =arr1;
+    console.log(x);
+    console.log(y);
+    console.log(z);
+</script>
+
+<!--4、块级作用域-->
+<script>
+    //js
+    var obj2 = {a:100,b:200};
+    for(var item in obj2){
+        console.log(item)
+    }
+    console.log(item)//b,外面可以访问到
+
+    //es6
+    const obj3 = {a:100,b:200}
+    for(let item1 in obj3){
+        console.log(item1)
+    }
+    console.log(item1)//undefined，外面访问不到
+</script>
+
+<!--5、函数默认参数-->
+<script>
+    //js
+    function (a,b){
+        if(b==null){
+            b=0
+        }
+    }
+    //es6
+    function (a,b=0){
+
+    }
+</script>
+<!--6、箭头函数,this指向函数体之外最近一层的this，不像普通js指向window-->
+
+<script>
+    function fn(){
+        console.log('real',this)//{a:100}
+        var arr = [1,2,3]
+        //普通js
+        arr.map(function(item){
+            console.log('js',this)//window
+            return item +1
+        });
+        //箭头函数
+        arr.map(item=>{
+            consol.log('es6',this)//{a:100}
+            return item +1
+         })
+    }
+    fn.call({a:100})//call里面传的什么函数里面this就指向这个
+</script>
+
+</body>
+</html>

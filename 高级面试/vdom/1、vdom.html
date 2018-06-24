@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>virtual dom</title>
+</head>
+<body>
+<!--虚拟dom 用js模拟dom结构，目的提高重绘性能-->
+
+<script>
+    //jq实现例子
+    var data=[
+        {
+            name:'1',
+            age:'20',
+            address:'2'
+        },
+        {
+            name:'1',
+            age:'20',
+            address:'2'
+        },
+        {
+            name:'1',
+            age:'20',
+            address:'2'
+        }];
+
+    //渲染函数
+    function render(data){
+        var $container = $("#container")
+
+        //清空现有内容
+        $container.html('');//如果不先清空会造成好多表格累加的情况
+
+        //拼接table
+        var $table = $('<table>');
+        $table.append($('<tr><td>age</td><td>address</td></tr>'))
+        data.forEach(function(item){
+            $table.append($('<tr><td>'+item.age+'</td><td>'+item.age+'</td><td>'+item.address+'</td></tr>'))
+        });
+
+        //渲染到页面
+        $container.append($table)
+    };
+    $("#btn-change").click(function(){
+        data[1].age = 30;
+        data[2].address = '5'
+        //re-render
+        render(data);
+    });
+    //页面加载完立即执行（初次渲染）
+    render(data);
+</script>
+
+</body>
+</html>

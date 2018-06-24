@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise</title>
+</head>
+<body>
+<!--Promise的基本使用和原理-->
+<!--不是所有浏览器都支持promise，可以引入第三方库bluebird这个js就都支持了-->
+
+<!--异常捕获-->
+<!--规定：then只接受一个参数，最后统一用catch捕获异常-->
+<script>
+    result.then(function(){
+        console.log('aa')
+    }).catch(function(ex){
+        //最后统一catch
+        console.log(ex)
+    })
+</script>
+
+<!--多个串联-->
+<!--如果想要按照顺序执行可以下面这样-->
+<script>
+    result1.then(function(img){
+        console.log('a1');
+        return result2
+    }).then(function(){
+        console.log(a2)
+    }).catch(function(ex){
+        console.log(ex)
+    })
+</script>
+
+<!--Promise.all 接受一个promise对象的数组-->
+<!--待全部完成之后，统一执行sucess-->
+<script>
+    Promise.all([result1,result2]).then(datas=>{
+        //接收到的datas是一个数组，一次包含了多个promise返回的内容
+            console.log(datas[0])
+            console.log(datas[0])
+    })
+</script>
+
+<!--Promise.race 接收一个包含多个promise对象数组-->
+<script>
+    Promise.race([result1,result2]).then(data=>{
+        //data即最先执行完成的promise返回值
+        console.log(data);
+    })
+</script>
+
+
+</body>
+</html>

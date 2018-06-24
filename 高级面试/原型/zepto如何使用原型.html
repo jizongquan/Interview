@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>zepto如何使用原型</title>
+</head>
+<body>
+<script>
+    //空对象
+    var zepto = {};
+
+    zepto.init = function(selector){
+        //源码中，这里的处理情况比较复杂，这里只是简单理解处理
+        var slice = Array.prototype.slice;//将数组中的原型拿出来
+        var dom = slice.call(document.querySelectorAll(selector));
+        return zepto.Z(dom,selector)
+    };
+
+    //即使用zepto的时候的$
+    var $ = function(selector){
+        return zepto.init(selector)
+    };
+
+    //这就是构造函数
+    function  Z(dom,seletor){
+        var i,len =dom?dom.length : 0;
+        for(i = 0;i<len;i++) this[i] = dom[i];
+        this.length = len;
+        this.selector = seletor || ''
+    }
+
+    zepto.Z = function(dom,selector){
+        //注意，出现了new 关键字
+        return new Z(dom,selector)
+    };
+
+    $.fn={
+        constructor:zepto.Z,
+        css:function(key,val){
+
+        },
+        html:function(value){
+
+        }
+    };
+    zepto.Z.prototype = Z.prototype = $.fn
+//    为什么Z.prototype要赋值给$.fn,为什么不是Z的原型直接赋值给一个对象呢
+</script>
+</body>
+</html>

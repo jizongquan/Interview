@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>deferred</title>
+</head>
+<body>
+<!--deferred延迟-->
+<!--jQuery1.5后加的-->
+
+<!--1.5前-->
+<script>
+    var ajax = $.ajax({
+        url:'',
+        success:function(){
+
+        },
+        error:function(){
+
+        }
+    })
+    console.log(ajax)//返回一个XHR
+</script>
+
+<!--1.5后-->
+<script>
+    var ajax= $.ajax('data.json')
+    ajax.done(function(){
+        console.log('success1')
+    }).fail(function(){
+        console.log('error')
+    }).done(function(){
+        console.log('success2')
+    });
+    console.log(ajax)//返回一个deferred对象
+
+
+    var ajax= $.ajax('data.json')
+    ajax.then(function(){
+        console.log('success1')
+    },function(){
+        console.log('error')
+    }).then(function(){
+        console.log('success2')
+    },function(){
+        console.log('error1')
+    })
+    console.log(ajax)//返回一个deferred对象
+</script>
+
+
+<script>
+    //deferred
+    function waitHandle(){
+        var dtd = $.Deferred()//创建一个deferred对象
+        var wait= function(dtd){//要求传一个deferred对象
+            var task = function(){
+                console.log('执行完成')
+                dtd.resolve()//表示异步任务已经完成
+//                dtd.reject()表示任务失败或错误
+            }
+            setTimeout(task,2000)
+            return dtd //要求返回deferred对象
+//            return dtd.promise() //这里返回的是promise，而不是直接返回deferred对象
+
+        }
+        //注意，这里一定要有返回值
+        return wait(dtd)
+    }
+    var w = waitHandle()//下面的链式操作有问题需要分开写
+    w.then(function(){
+        console.log('ok1')
+    },function(){
+        console.log('err1')
+    });
+    w.then(function(){
+        console.log('ok2')
+    },function(){
+        console.log('err2')
+    })
+    //还可以w.done w.fail
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>async/await</title>
+</head>
+<body>
+<!--async/await是最直接的同步写法,同步的写法解决异步的问题-->
+<script>
+    const load = async function (){
+        const result1 = await loadImg(src1)
+        console.log(result1)
+        const result2 = await loadImg(src2)
+        console.log(result2)
+    }
+    load()
+</script>
+
+</body>
+</html>

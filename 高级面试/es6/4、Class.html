@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Class</title>
+</head>
+<body>
+<!--js构造函数-->
+<script>
+    function MathHandle(x,y){
+        this.x=x;
+        this.y=y;
+    }//这是个构造函数
+    MathHandle.prototype.add= function(){
+        return this.x + this.y;
+    };//这个是个构造函数原型的扩展
+    var m =new MathHandle(1,2);//构造函数new一个实例
+    console.log(m.add());//3
+</script>
+
+<!--class语法-->
+<script>
+    class MathHandel1{
+        constructor(x,y){
+            this.x=x;
+            this.y=y;
+        }
+        add(){
+            return this.x +this.y;
+        }
+    }
+    var m1 =new MathHandle1(1,2);//
+    console.log(m1.add());//3
+
+    typeof MathHandel1//function
+    MathHandel1.prototype.constructor === MathHandel1//构造函数原型里面默认会有个constructor 等于构造函数他本身true
+    m.__proto__===MathHandel1.prototype;//true 构造函数new出来的实例有个隐式原型等于显示原型
+</script>
+
+
+<!--es6前的js继承-->
+<script>
+    function Animal(){
+        this.eat = function(){
+            console.log('aa')
+        }
+    }
+    function Dog(){
+        this.bark = function(){
+            console.log('bb')
+        }
+    }
+    Dog.prototype = new Animal()
+    var jzq = new Dog();
+</script>
+
+<!--es6 class继承-->
+<script>
+    class Animal1{
+        constructor(name){
+            this.name=name
+        }
+        eat(){
+            console.log( `${this.name} eat`)
+        }
+    }
+    class Dog1 extends Animal1{
+        constructor(name){
+            super(name);//super是在执行Dog1之前先把Animal1执行一次
+            this.name = name
+        }
+        say(){
+            console.log(`${this.name} say`)
+        }
+    }
+    const dog1 = new Dog1('jzq')
+    dog1.say();
+    dog1.eat();
+</script>
+
+</body>
+</html>

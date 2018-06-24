@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--vue的三要素-->
+<!--响应式，模板引擎，渲染-->
+
+<!--响应式：vue如何监听到data的每个属性变化-->
+<!--什么是响应式：响应式就是修改data属性之后，vue立刻监听到；data属性被代理到vm上面-->
+<!--Object.defineProperty-->
+<script>
+    var obj = {};
+    var _name = 'jizongquan';
+    Object.defineProperty(obj,"name",{
+        get:function(){
+            console.log('get',_name);
+            return _name
+        },
+        set:function(newVal){
+            console.log('set',newVal);
+            _name = newVal
+        }
+    });
+    console.log(obj.name); //可以监听到get方法
+    obj.name = 'list'; //重新设值可以监听到 set方法
+</script>
+
+<!--模板引擎：vue的模板如何被解析，指令如何处理-->
+<!--对于vue来说模板本质就是以字符串形式存在的，有逻辑，与html格式相像，但有很大区别，最终还是要转化成html来显示-->
+<!--模板最终必须转换成JS代码，因为：有逻辑，必须用js才能实现，转换html渲染页面，必须用js才能实现-->
+<!--因此，模板最重要转换成一个js函数（例如render函数）-->
+
+<!--render函数-->
+<!--render函数width的用法（尽量不要用）-->
+<script>
+    //不用width
+    var obj = {
+        name:'jizongquan',
+        age:'20',
+        getAddress:function(){
+            alert('b')
+        }
+    };
+    function fn(){
+        alert(obj.name);
+        alert(obj.age);
+        obj.getAddress()
+    }
+    fn();
+
+    //用width
+    var obj1 = {
+        name:'jizongquan',
+        age:'20',
+        getAddress1:function(){
+            alert('c')
+        }
+    };
+    function fn1(){
+        with (obj1){
+            alert(name);
+            alert(age);
+            getAddress1();
+        }
+    };
+    fn1();
+</script>
+
+<div id="app1">
+    <p>{{price}}</p>
+</div>
+<script>
+    var vm = new Vue({
+        el:'#app1',
+        data:{
+            price:100
+        }
+    });
+    //手写模拟render函数 下面模拟上面解析成如下
+    function render(){
+        with (this){//this就是vm
+            return _c(
+                    'div',
+                    {
+                        attrs:{'id':'app'}
+                    },
+                    [
+                        _c('p',[_v(_s(price))])
+                    ]
+            )
+        }
+    }
+</script>
+<!--v-model是双向数据绑定能get，能set-->
+
+<!--渲染：vue的模板如何被渲染成html？以及渲染过程-->
+<!--render函数有个with用法，同vdom的h函数相似-->
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>promise</title>
+</head>
+<body>
+<!--es6前的callback-->
+<script>
+    function loadImg(src,callback,fail){
+        var img =document.createElement('img')
+        img.onload=function(){
+            callback(img)
+        };
+        img.onerror = function(){
+            fail()
+        };
+        img.src=src
+    }
+    var src = '';//给个图片地址
+    loadImg(src,function(img){
+        console.log(img.width)
+    },function(){
+        console.log('failed')
+    })
+</script>
+
+<!--promise语法-->
+<script>
+    function loadImg1(src1){
+        const promise = new Promise(function(resolve,reject){
+            var img1 = document.createElement('img');
+            img1.onload=function(){
+                resolve(img1)
+            };
+            img1.onerror = function(){
+                reject()
+            };
+            img1.src1=src1
+        });
+        return promise;
+    };
+    var src1 = '';//给个图片地址
+    var result = loadImg1(src1);
+    result.then(function(img){
+        console.log(img.width)
+    },function(){
+        console.log('failed')
+    })
+    result.then(function(img){
+        console.log(img.height)
+    })
+</script>
+</body>
+</html>

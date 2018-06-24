@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webpack和rollup</title>
+</head>
+<body>
+<!--npm install webpack babel-loader --save-dev-->
+<!--配置webpack.config.js-->
+<!--配置package.json中的scripts-->
+<!--配置好启动然后npm start-->
+<script>
+    //webpack.config.js 可以在webpack官网查找
+    module.exports={
+        entry:'./src/index.js',
+        output:{
+            path:__dirname,
+            filename:'./build/bundel.js'
+        },
+        module:{
+            rules:[{
+                //定义规则
+                test:/\.js?$/,
+                exclude:/(node_modules)/,//除了这个目录
+                loader:'babel-loader'//通过这个编译
+            }]
+        }
+    }
+</script>
+
+<!--rollup 通过它打包的内容会被简化非常非常小-->
+<!--npm init重新初始化-->
+<!--npm i rollup rollup-plugin-node-resolve rollup-plugin-babel
+babel-plugin-external-helpers babel-preset-latest babel-core --save-dev-->
+<!--配置.babelrc-->
+<!--配置rollup.config.js-->
+<script>
+//.babelrc
+{
+    "presets":[
+        ["latest",{
+                "es2015":{
+                    "modules":"false"
+                }
+        }]
+    ],
+    "plugins":["external-helpers"]
+}
+//rollup.config.js
+import babel from 'rollup-plugin-babel'
+import resolve from 'rollup-plugin-node-resolve'
+export default{
+    entry:'src/index.js',
+    format:'umd',//格式兼容性的规范及兼容AMD和CMD
+    plugins:[
+        resolve(),
+        babel({
+            exclude:'node_modules/**'
+        })
+    ],
+    dest:'build/bundle.js'
+}
+//在package里面的scripts里面设置start:rollup -c rollup.config.js
+</script>
+
+<!--区别-->
+<!--rollup功能单一，webpack功能强大-->
+
+<!--模块化AMD成一个标准即require.js-->
+</body>
+</html>

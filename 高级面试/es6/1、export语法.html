@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>export</title>
+</head>
+<body>
+<script>
+    //注意有无default
+    //util1.js
+    export default{
+        a:100
+    }
+
+    //util2.js
+    export function fn1(){
+        alert('fn1')
+    }
+
+    export function fn2(){
+        alert('fn2')
+    }
+
+    //index.js
+    import util1 from './util1.js'
+    import {fn1,fn2} from './util2.js'
+    console.log(util1)
+    fn1()
+    fn2()
+
+</script>
+
+</body>
+</html>

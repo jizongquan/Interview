@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步</title>
+</head>
+<body>
+<!--1、什么是单线程，和异步有何关系-->
+<!--单线程就是同时只做一件事情，；两段js不能同时执行-->
+<!--原因是避免DOM渲染冲突-->
+
+<!--2、什么是event-loop-->
+<!--事件轮询，JS实现异步的具体解决方案-->
+<!--合适被放入异步队列；1、直接放入，2、隔一段时间放入，3、ajax-->
+
+<!--3、目前js解决异步的方案有哪些-->
+<!--Promise-->
+<!--Jquery deferred-->
+<!--Async/Await-->
+<!--Generator-->
+
+<!--4、如果只用jquery如何解决异步-->
+
+<!--5、Promise的标准-->
+<!--首先new Promise实例，而且要return-->
+<!--new Promise时候传入函数，函数有resolve reject两个参数-->
+<!--成功时执行resolve()，失败时执行reject()-->
+<!--.then()监听结果-->
+
+<!--6、async/await的使用-->
+<!--使用await，函数必须用async标识-->
+<!--await后面必须跟一个Promise实例-->
+<!--需要babel-polyfill-->
+</body>
+</html>

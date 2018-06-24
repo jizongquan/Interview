@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>题目</title>
+</head>
+<body>
+<!--1、之前使用jquery和现在使用vue或react框架的区别-->
+<!--jq和vue区别-->
+<!--数据和视图的分离，解耦（开放封闭原则）-->
+<!--以数据驱动视图，只关心数据变化，dom操作被封装-->
+
+<!--2、你如何理解MVVM-->
+
+<!--3、vue如何实现响应式-->
+<!--Object.defineProperty；将data的属性代理到vm上-->
+
+<!--4、vue如何解析模板-->
+
+<!--5、介绍vue的实现流程-->
+<!--第一步：解析模板成render函数-->
+<!--with的用法；模板中的信息都被render函数包含；模板中用到的data中的属性，都变成了js变量
+模板中的v-model v-for v-on都变成了js逻辑；render函数返回vnode-->
+<!--第二步：响应式开始监听-->
+<!--Object.defineProperty；将data的属性代理到vm上-->
+<!--第三步：首次渲染，显示页面，且绑定依赖-->
+<!--初次渲染，执行updateComponent，执行vm._render();执行render函数，会访问到vm.list
+和vm.title;会被响应式get方法监听到；执行updateComponent，会走到vdom的patch方法；
+patch将vnode渲染成DOM，初次渲染完成-->
+
+<!--为何要监听get，直接监听set不行吗-->
+<!--data中有很多属性，有些被用到，有些可能不被用到；被用到的会走到get，不被用到的不会走到get；
+未走到get中的属性，set的时候无需关心；避免不必要的重复渲染-->
+
+<!--第四步：data属性变化，触发rerender-->
+<!--修改属性，被响应式的set监听到；set中执行updateComponent；updateComponent重新执行vm._render();
+生成的vnode和prevVnode，通过patch进行对比；渲染到html中-->
+</body>
+</html>

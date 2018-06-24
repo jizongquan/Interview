@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>diff</title>
+</head>
+<body>
+<!--什么是diff算法-->
+<!--diff是一个命令 执行 会对比两者的区别-->
+
+<!--vdom为何使用diff算法-->
+<!--DOM操作是昂贵的，因此尽量减少DOM操作-->
+<!--找出本次DOM必须更新的节点来更新，其他的不更新-->
+<!--这个找出的过程，需要diff算法-->
+<!--实现方式两种path(container,vnode) path(vnode,newVnode)-->
+<!--第一种就是createElement 第二种updateChildren-->
+
+<script>
+    function createElement(vnode){
+        var tag = vnode.tag //ul
+        var attrs = vnode.attrs || {}
+        var children = vnode.children || []
+        if(!tag){
+            return null
+        }
+
+        //创建真实的DOM元素
+        var elem = document.createElement(tag)
+        //属性
+        var attrName;
+        for(attrName in attrs){
+            if(attrs.hasOwnProperty(attrName)){
+                //给elem添加属性
+                elem.setAttribute(attrName,attrs[attrName])
+            }
+        }
+        //子元素
+        children.forEach(function(childVnode){
+            //给elem添加子元素
+            elem.appendChild(createElement(childVnode))//递归
+        });
+        //返回真实的DOM元素
+        return elem
+    }
+</script>
+
+<script>
+    //限定vnode 和newVnode
+    function updateChildren(vnode,newVnode){
+        var children = vnode.children || [];
+        var newChildren = newVnode.children || [];
+        children.forEach(function(childVnode,index){
+            var newChildnode = newChildren[index]
+            if(childVnode.tag === newChildnode.tag){
+                //深层次对比，递归
+                updateChildren(childVnode,newChildnode)
+            }else{
+                replaceNode(childVnode,newChildnode)
+            }
+        })
+    }
+    function replaceNode(vnode,newVnode){
+        var elem = vnode.elem//真实的DOM节点
+        var newElem = createElement(newVnode)
+
+        //替换
+    }
+</script>
+
+</body>
+</html>
